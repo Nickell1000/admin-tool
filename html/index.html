@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="de" class="nui-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Overlay</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="nui-hidden">
+    <div id="app" class="app hidden">
+        <div class="scene-fog"></div>
+
+        <main class="overlay-shell">
+            <header class="topbar">
+                <div class="brand-block">
+                    <p class="brand-kicker">STAFF PANEL</p>
+                    <h1 id="title">Admin Overlay</h1>
+                </div>
+
+                <nav class="topnav">
+                    <button type="button" class="nav-tab active" data-view="items">ITEMS</button>
+                    <button type="button" class="nav-tab" data-view="recipes">REZEPTE</button>
+                    <button type="button" class="nav-tab" data-view="players">SPIELER</button>
+                    <button type="button" class="nav-tab" data-view="shops">SHOPS</button>
+                    <button type="button" class="nav-tab" data-view="props">PROPS</button>
+                </nav>
+
+                <div class="audience-block">
+                    <span class="audience-label">Status</span>
+                    <strong id="audienceText">Items an dich selbst gerichtet</strong>
+                </div>
+            </header>
+
+            <div id="saveToast" class="save-toast hidden">Gespeichert</div>
+
+            <section class="toolbar">
+                <label class="search-box">
+                    <span>Suche</span>
+                    <input id="searchInput" type="text" placeholder="Items oder Shops suchen">
+                </label>
+
+                <div class="toolbar-actions">
+                    <button id="refreshButton" class="toolbar-button">Aktualisieren</button>
+                    <button id="openCreateItemButton" class="toolbar-button">Item erstellen</button>
+                    <button id="closeButton" class="toolbar-button danger">Schliessen</button>
+                </div>
+            </section>
+
+            <section class="filters">
+                <div id="itemFiltersBlock" class="filter-group">
+                    <span class="filter-title">Kategorie</span>
+                    <div id="categoryFilters" class="chips"></div>
+                </div>
+
+                <div id="shopFiltersBlock" class="filter-group hidden">
+                    <span class="filter-title">Shop</span>
+                    <select id="shopSelect" class="shop-select"></select>
+                    <select id="shopLocationSelect" class="shop-select"></select>
+                    <button id="teleportToShopNpcButton" class="toolbar-button" type="button">Zum NPC TP</button>
+                    <button id="teleportToShopMarkerButton" class="toolbar-button" type="button">Zum Shop TP</button>
+                    <button id="moveShopNpcButton" class="toolbar-button" type="button">NPC hierhin setzen</button>
+                    <button id="deleteShopNpcButton" class="toolbar-button danger" type="button">NPC loeschen</button>
+                    <button id="openCreateShopButton" class="toolbar-button" type="button">Shop erstellen</button>
+                    <button id="openShopAddProductButton" class="toolbar-button" type="button">Item zum Shop hinzufuegen</button>
+                </div>
+
+                <div id="playerFiltersBlock" class="filter-group hidden">
+                    <span class="filter-title">Spieler</span>
+                    <select id="adminPlayerSelect" class="shop-select"></select>
+                </div>
+
+                <div class="filter-summary">
+                    <span id="resultsCount">0 Eintraege</span>
+                    <span id="selectedCount">Keine Auswahl</span>
+                </div>
+            </section>
+
+            <section class="content">
+                <section class="catalog">
+                    <div id="itemsList" class="item-grid"></div>
+                </section>
+            </section>
+
+            <div id="detailModal" class="detail-modal hidden">
+                <button id="detailBackdrop" class="detail-backdrop" type="button" aria-label="Overlay schliessen"></button>
+                <section class="detail-panel">
+                    <header class="detail-header">
+                        <div>
+                            <p class="card-kicker">Details</p>
+                            <h2 id="detailTitle">Auswahl</h2>
+                        </div>
+                        <button id="detailCloseButton" class="toolbar-button danger" type="button">Schliessen</button>
+                    </header>
+
+                    <div class="detail-content">
+                        <section id="itemsDock" class="dock-stack">
+                        <div class="dock-card hero-card">
+                            <p class="card-kicker">Auswahl</p>
+                            <h2 id="selectedLabel">Noch kein Item ausgewaehlt</h2>
+                            <p id="selectedMeta" class="soft-text">Waehle links ein Item aus.</p>
+                            <p id="selectedDescription" class="soft-copy"></p>
+                        </div>
+
+                        <div class="dock-card">
+                            <p class="card-kicker">Parameter</p>
+                            <div class="field-grid">
+                                <label class="field">
+                                    <span>Menge</span>
+                                    <input id="amountInput" type="number" min="1" step="1" value="1">
+                                </label>
+
+                                <label id="radiusWrapper" class="field hidden">
+                                    <span>Radius</span>
+                                    <input id="radiusInput" type="number" min="1" step="1" value="10">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="dock-card">
+                            <p class="card-kicker">Empfaenger</p>
+                            <div id="targetTabs" class="target-tabs">
+                                <button class="target-tab active" data-target="self">Ich</button>
+                                <button class="target-tab" data-target="player">Spieler</button>
+                                <button class="target-tab" data-target="all">Alle</button>
+                                <button class="target-tab" data-target="nearby">Nahe</button>
+                            </div>
+
+                            <label id="playerWrapper" class="field hidden">
+                                <span>Spieler auswaehlen</span>
+                                <select id="playerSelect"></select>
+                            </label>
+                        </div>
+
+                        <div class="dock-card review-card">
+                            <p class="card-kicker">Zusammenfassung</p>
+                            <div id="reviewText" class="review-text">Waehle ein Item aus, stelle die Menge ein und entscheide, wohin es gegeben werden soll.</div>
+                        </div>
+
+                        <div class="button-row">
+                            <button id="giveButton" class="primary-button">Item geben</button>
+                            <button id="deleteItemButton" type="button" class="toolbar-button danger">Item loeschen</button>
+                        </div>
+                    </section>
+
+                    <section id="shopsDock" class="dock-stack hidden">
+                        <div class="dock-card hero-card">
+                            <p class="card-kicker">Shop</p>
+                            <h2 id="shopLabel">Kein Shop ausgewaehlt</h2>
+                            <p id="shopMeta" class="soft-text">Waehle oben einen Shop aus.</p>
+                            <p id="shopCoords" class="soft-copy"></p>
+                        </div>
+
+                        <div class="dock-card">
+                            <p class="card-kicker">Produkt Editor</p>
+                            <div class="field-grid single">
+                                <label class="field">
+                                    <span>Itemname</span>
+                                    <select id="shopItemName"></select>
+                                </label>
+                                <label class="field">
+                                    <span>Preis</span>
+                                    <input id="shopItemPrice" type="number" min="0" step="1" value="0">
+                                </label>
+                                <label class="field">
+                                    <span>Anzahl</span>
+                                    <input id="shopItemCount" type="number" min="0" step="1" value="1">
+                                </label>
+                                <label class="field">
+                                    <span>Waehung</span>
+                                    <select id="shopItemCurrency">
+                                        <option value="legal">legal</option>
+                                        <option value="iligal">iligal</option>
+                                    </select>
+                                </label>
+                                <label class="field">
+                                    <span>Lizenz</span>
+                                    <select id="shopItemLicense">
+                                        <option value="no">nein</option>
+                                        <option value="yes">ja</option>
+                                    </select>
+                                </label>
+                                <label class="field">
+                                    <span>Grade</span>
+                                    <select id="shopItemGrade">
+                                        <option value="">alle</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </label>
+                                <label class="field field-full">
+                                    <span>Metadata JSON</span>
+                                    <select id="shopItemMetadata">
+                                        <option value="no">nein</option>
+                                        <option value="yes">ja</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="dock-card review-card">
+                            <p class="card-kicker">Shop Aktionen</p>
+                            <div id="shopReviewText" class="review-text">Waehle einen Shop und danach ein Produkt oder trage ein neues Item ein.</div>
+                        </div>
+
+                        <div class="button-row">
+                            <button id="saveShopProductButton" class="primary-button">Produkt speichern</button>
+                            <button id="deleteShopProductButton" class="toolbar-button">Produkt entfernen</button>
+                        </div>
+                    </section>
+
+                    <section id="playersDock" class="dock-stack hidden">
+                        <div class="dock-card hero-card">
+                            <p class="card-kicker">Spieler</p>
+                            <h2 id="adminSelectedPlayerLabel">Kein Spieler ausgewaehlt</h2>
+                            <p id="adminSelectedPlayerMeta" class="soft-text">Waehle links einen Spieler aus.</p>
+                            <p id="adminSelectedPlayerDescription" class="soft-copy"></p>
+                        </div>
+
+                        <div class="dock-card">
+                            <p class="card-kicker">Ruestung</p>
+                            <div class="field-grid">
+                                <label class="field">
+                                    <span>Armor Wert</span>
+                                    <input id="playerArmorInput" type="number" min="0" max="100" step="1" value="100">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="dock-card">
+                            <p class="card-kicker">Fahrzeug / Spectate</p>
+                            <div class="field-grid">
+                                <label class="field">
+                                    <span>Fahrzeugmodell</span>
+                                    <input id="vehicleModelInput" type="text" placeholder="z.B. sultanrs">
+                                </label>
+                                <label class="field">
+                                    <span>Nummernschild</span>
+                                    <input id="vehiclePlateInput" type="text" placeholder="ADMIN">
+                                </label>
+                                <label class="field">
+                                    <span>Health (HP)</span>
+                                    <input id="playerHealthInput" type="number" min="1" step="1" placeholder="z.B. 50">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="dock-card review-card">
+                            <p class="card-kicker">Weitere Aktionen</p>
+                            <div class="review-text">Spawn Fahrzeug fuer Spieler, Spectate starten/beenden, Inventar einsehen oder Leben setzen.</div>
+                        </div>
+
+                        <div class="button-row">
+                            <button id="spawnVehicleButton" class="toolbar-button">Fahrzeug spawnen</button>
+                            <button id="spectateButton" class="toolbar-button">Spectate</button>
+                            <button id="unspectateButton" class="toolbar-button">Spectate beenden</button>
+                            <button id="viewInventoryButton" class="toolbar-button">Inventar anzeigen</button>
+                            <button id="setPlayerHealthButton" class="toolbar-button danger">Leben setzen</button>
+                        </div>
+
+                        <div id="playerInventoryBlock" class="dock-card hidden">
+                            <p class="card-kicker">Inventar</p>
+                            <div id="playerInventoryList" class="soft-copy"></div>
+                        </div>
+
+                        <div class="dock-card review-card">
+                            <p class="card-kicker">Aktionen</p>
+                            <div id="playerReviewText" class="review-text">Waehle einen Spieler aus, um Admin-Aktionen auszufuehren.</div>
+                        </div>
+
+                        <div class="button-row">
+                            <button id="healPlayerButton" class="primary-button">Spieler heilen</button>
+                            <button id="teleportToPlayerButton" class="toolbar-button">Zu Spieler TP</button>
+                            <button id="teleportPlayerToMeButton" class="toolbar-button">Spieler zu mir TP</button>
+                            <button id="setPlayerArmorButton" class="toolbar-button danger">Ruestung setzen</button>
+                        </div>
+                        </section>
+
+                    <section id="recipesDock" class="dock-stack hidden">
+                        <div class="dock-card hero-card">
+                            <p class="card-kicker">Rezept</p>
+                            <h2 id="recipeLabel">Kein Rezept ausgewaehlt</h2>
+                            <p id="recipeMeta" class="soft-text">Waehle links ein Rezept aus oder erstelle ein neues.</p>
+                            <p id="recipeBlueprintInfo" class="soft-copy"></p>
+                        </div>
+
+                        <div class="dock-card">
+                            <p class="card-kicker">Rezept Editor</p>
+                            <div class="field-grid single">
+                                <label class="field">
+                                    <span>Rezept Key</span>
+                                    <input id="recipeKeyInput" type="text" placeholder="z.B. armor_plate">
+                                </label>
+                                <label class="field">
+                                    <span>Output Item</span>
+                                    <select id="recipeItemInput"></select>
+                                </label>
+                                <label class="field">
+                                    <span>Label</span>
+                                    <input id="recipeLabelInput" type="text" placeholder="z.B. Armor Plate">
+                                </label>
+                                <label class="field">
+                                    <span>Anzahl</span>
+                                    <input id="recipeAmountInput" type="number" min="1" step="1" value="1">
+                                </label>
+                                <label class="field">
+                                    <span>Dauer (ms)</span>
+                                    <input id="recipeDurationInput" type="number" min="1000" step="500" value="5000">
+                                </label>
+                                <label class="field">
+                                    <span>Bild</span>
+                                    <input id="recipeImageInput" type="text" placeholder="leer = Itembild">
+                                </label>
+                                <label class="field field-full">
+                                    <span>Beschreibung</span>
+                                    <textarea id="recipeDescriptionInput" placeholder="Beschreibung fuer das Rezept"></textarea>
+                                </label>
+                                <label class="field field-full">
+                                    <span>Zutaten JSON</span>
+                                    <textarea id="recipeIngredientsInput" placeholder='{"steel":8,"iron":6}'></textarea>
+                                </label>
+                                <label class="field field-full">
+                                    <span>Metadata JSON</span>
+                                    <textarea id="recipeMetadataInput" placeholder='{}'></textarea>
+                                </label>
+                                <label class="field">
+                                    <span>Bauplan Item</span>
+                                    <input id="recipeBlueprintItemInput" type="text" placeholder="z.B. bp_armor_plate">
+                                </label>
+                                <label class="field">
+                                    <span>Bauplan Label</span>
+                                    <input id="recipeBlueprintLabelInput" type="text" placeholder="z.B. Bauplan: Armor Plate">
+                                </label>
+                                <label class="field">
+                                    <span>Bauplan Bild</span>
+                                    <input id="recipeBlueprintImageInput" type="text" placeholder="optional">
+                                </label>
+                                <label class="field">
+                                    <span>Bauplan automatisch erstellen</span>
+                                    <select id="recipeBlueprintAutoCreateInput">
+                                        <option value="yes">ja</option>
+                                        <option value="no">nein</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="dock-card review-card">
+                            <p class="card-kicker">Hinweis</p>
+                            <div id="recipeReviewText" class="review-text">Rezepte koennen hier erstellt, bearbeitet und geloescht werden. Wenn ein Bauplan-Item gesetzt ist, wird das Rezept im Crafting erst sichtbar, sobald dieser Bauplan im Tisch-Inventar liegt.</div>
+                        </div>
+
+                        <div class="button-row">
+                            <button id="saveRecipeButton" class="primary-button">Rezept speichern</button>
+                            <button id="newRecipeButton" class="toolbar-button">Neu</button>
+                            <button id="deleteRecipeButton" class="toolbar-button danger">Rezept loeschen</button>
+                        </div>
+                    </section>
+
+                    <section id="propsDock" class="dock-stack hidden">
+                        <div class="dock-card hero-card">
+                            <p class="card-kicker">Prop</p>
+                            <h2 id="propLabel">Kein Prop ausgewaehlt</h2>
+                            <p id="propMeta" class="soft-text">Waehle links einen platzierten Prop aus.</p>
+                            <p id="propCoords" class="soft-copy"></p>
+                        </div>
+
+                        <div class="dock-card review-card">
+                            <p class="card-kicker">Aktionen</p>
+                            <div id="propReviewText" class="review-text">Hier siehst du alle platzierten Crafting-Props auf dem Server.</div>
+                        </div>
+
+                        <div class="button-row">
+                            <button id="teleportToPropButton" class="primary-button">Zu Prop TP</button>
+                            <button id="deletePropButton" class="toolbar-button danger">Prop loeschen</button>
+                        </div>
+                    </section>
+                    </div>
+                </section>
+            </div>
+
+            <div id="createItemModal" class="detail-modal hidden">
+                <button id="createItemBackdrop" class="detail-backdrop" type="button" aria-label="Item erstellen schliessen"></button>
+                <section class="detail-panel create-panel">
+                    <header class="detail-header">
+                        <div>
+                            <p class="card-kicker">Neues Item</p>
+                            <h2>Item erstellen</h2>
+                        </div>
+                        <button id="createItemCloseButton" class="toolbar-button danger" type="button">Schliessen</button>
+                    </header>
+
+                    <div class="detail-content">
+                        <section class="dock-stack">
+                            <div class="dock-card">
+                                <p class="card-kicker">Item Daten</p>
+                                <div class="field-grid single">
+                                    <label class="field">
+                                        <span>Item Name</span>
+                                        <input id="createItemName" type="text" placeholder="z.B. custom_ticket">
+                                    </label>
+                                    <label class="field">
+                                        <span>Label</span>
+                                        <input id="createItemLabel" type="text" placeholder="z.B. Custom Ticket">
+                                    </label>
+                                    <label class="field">
+                                        <span>Typ</span>
+                                        <select id="createItemType">
+                                            <option value="item">item</option>
+                                            <option value="weapon">weapon</option>
+                                            <option value="ammo">ammo</option>
+                                        </select>
+                                    </label>
+                                    <label class="field">
+                                        <span>Gewicht</span>
+                                        <input id="createItemWeight" type="number" min="0" step="1" value="0">
+                                    </label>
+                                    <label class="field">
+                                        <span>Bild</span>
+                                        <input id="createItemImage" type="text" placeholder="leer = itemname.png">
+                                    </label>
+                                    <label class="field">
+                                        <span>Unique</span>
+                                        <select id="createItemUnique">
+                                            <option value="no">nein</option>
+                                            <option value="yes">ja</option>
+                                        </select>
+                                    </label>
+                                    <label class="field">
+                                        <span>Benutzbar</span>
+                                        <select id="createItemUseable">
+                                            <option value="no">nein</option>
+                                            <option value="yes">ja</option>
+                                        </select>
+                                    </label>
+                                    <label class="field">
+                                        <span>Schliesst</span>
+                                        <select id="createItemShouldClose">
+                                            <option value="yes">ja</option>
+                                            <option value="no">nein</option>
+                                        </select>
+                                    </label>
+                                    <label class="field field-full">
+                                        <span>Beschreibung</span>
+                                        <textarea id="createItemDescription" placeholder="Beschreibung fuer das neue Item"></textarea>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="button-row">
+                                <button id="createItemButton" type="button" class="primary-button">Item erstellen</button>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+
+            <div id="createShopModal" class="detail-modal hidden">
+                <button id="createShopBackdrop" class="detail-backdrop" type="button" aria-label="Shop erstellen schliessen"></button>
+                <section class="detail-panel create-panel">
+                    <header class="detail-header">
+                        <div>
+                            <p class="card-kicker">Neuer Shop</p>
+                            <h2>Shop erstellen</h2>
+                        </div>
+                        <button id="createShopCloseButton" class="toolbar-button danger" type="button">Schliessen</button>
+                    </header>
+
+                    <div class="detail-content">
+                        <section class="dock-stack">
+                            <div class="dock-card">
+                                <p class="card-kicker">Shop Daten</p>
+                                <div class="field-grid single">
+                                    <label class="field">
+                                        <span>Shop Key</span>
+                                        <input id="createShopKey" type="text" placeholder="z.B. BurgerShopCustom">
+                                    </label>
+                                    <label class="field">
+                                        <span>Shop Name</span>
+                                        <input id="createShopLabel" type="text" placeholder="z.B. Burger Shop Custom">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="button-row">
+                                <button id="createShopButton" class="primary-button" type="button">Shop an meiner Position erstellen</button>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+            <footer class="statusbar">
+                <span id="subtitle">Items und Shops direkt im Overlay verwalten</span>
+                <span class="status-right">ESC zum Schliessen</span>
+            </footer>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

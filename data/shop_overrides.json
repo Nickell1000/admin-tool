@@ -1,0 +1,430 @@
+{
+    "items": [],
+    "locations": {
+        "BlackMarketArms": {
+            "locations": [
+                {
+                    "w": 170.0787353515625,
+                    "z": 74.134033203125,
+                    "y": 226.2857208251953,
+                    "x": -594.5406494140625
+                }
+            ],
+            "products": [
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "WEAPON_DAGGER",
+                    "price": 5000
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "WEAPON_PISTOL50",
+                    "price": 500
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "ammo-50",
+                    "price": 50
+                },
+                {
+                    "metadata": {
+                        "registered": true
+                    },
+                    "name": "weapon_minismg",
+                    "price": 1000
+                },
+                {
+                    "count": 0,
+                    "name": "ammo-9",
+                    "price": 100
+                },
+                {
+                    "metadata": {
+                        "registered": true
+                    },
+                    "name": "weapon_pumpshotgun",
+                    "price": 50000
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "ammo-shotgun",
+                    "price": 5000
+                },
+                {
+                    "metadata": {
+                        "registered": true
+                    },
+                    "name": "weapon_assaultrifle",
+                    "price": 100000
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "ammo-rifle2",
+                    "price": 500000
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "WEAPON_MARKSMANPISTOL",
+                    "price": 500000
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "ammo-sniper",
+                    "price": 500000
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "WEAPON_RPG",
+                    "price": 1000000
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "ammo-rocket",
+                    "price": 1000000
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "at_suppressor_light",
+                    "price": 50000
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "at_clip_extended_smg",
+                    "price": 500000
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "at_scope_medium",
+                    "price": 500000
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "at_grip",
+                    "price": 500000
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "at_flashlight",
+                    "price": 500000
+                },
+                {
+                    "count": 0,
+                    "metadata": {
+                        "registered": false
+                    },
+                    "currency": "black_money",
+                    "name": "at_muzzle_tactical",
+                    "price": 500000
+                }
+            ]
+        },
+        "PoliceArmoury": {
+            "locations": [
+                {
+                    "w": 93.54330444335938,
+                    "z": 30.6783447265625,
+                    "y": -981.019775390625,
+                    "x": 461.9208679199219
+                }
+            ]
+        },
+        "Medicine": {
+            "locations": [
+                {
+                    "w": 155.90550231933598,
+                    "z": 43.2821044921875,
+                    "y": -596.017578125,
+                    "x": 300.4087829589844
+                }
+            ]
+        },
+        "Liquor": {
+            "locations": [
+                {
+                    "w": 274.96063232421877,
+                    "z": 46.3992919921875,
+                    "y": -982.140625,
+                    "x": 1134.1318359375
+                },
+                {
+                    "w": 28.34645652770996,
+                    "z": 12.3121337890625,
+                    "y": -908.3076782226564,
+                    "x": -1221.83740234375
+                },
+                {
+                    "w": 133.22833251953126,
+                    "z": 40.14794921875,
+                    "y": -377.74945068359377,
+                    "x": -1486.4571533203126
+                },
+                {
+                    "w": 87.87401580810547,
+                    "z": 15.041748046875,
+                    "y": 390.7384643554688,
+                    "x": -2966.439453125
+                },
+                {
+                    "w": 175.74803161621098,
+                    "z": 38.142822265625,
+                    "y": 2710.813232421875,
+                    "x": 1166.08349609375
+                },
+                {
+                    "w": 195.59054565429688,
+                    "z": 34.97509765625,
+                    "y": 3606.540771484375,
+                    "x": 1393.002197265625
+                }
+            ],
+            "products": [
+                {
+                    "count": 0,
+                    "name": "water",
+                    "price": 10
+                },
+                {
+                    "count": 0,
+                    "name": "cola",
+                    "price": 10
+                },
+                {
+                    "count": 0,
+                    "name": "burger",
+                    "price": 15
+                }
+            ]
+        },
+        "BlackMarketmedical": {
+            "locations": [
+                {
+                    "w": 266.4566955566406,
+                    "z": 56.947265625,
+                    "y": 2465.85498046875,
+                    "x": -149.89450073242188
+                }
+            ]
+        },
+        "Ammunation": {
+            "locations": [
+                {
+                    "w": 181.41732788085936,
+                    "z": 21.8154296875,
+                    "y": -933.5736083984376,
+                    "x": -661.7802124023438
+                },
+                {
+                    "w": 357.1653442382813,
+                    "z": 29.6168212890625,
+                    "y": -2159.024169921875,
+                    "x": 810.3296508789063
+                },
+                {
+                    "w": 223.93701171875,
+                    "z": 34.6885986328125,
+                    "y": 3761.274658203125,
+                    "x": 1692.4747314453126
+                },
+                {
+                    "w": 223.93701171875,
+                    "z": 31.4534912109375,
+                    "y": 6085.31884765625,
+                    "x": -331.4637451171875
+                },
+                {
+                    "w": 68.031494140625,
+                    "z": 69.9384765625,
+                    "y": -51.11208724975586,
+                    "x": 253.6615447998047
+                },
+                {
+                    "w": 155.90550231933598,
+                    "z": 29.785400390625,
+                    "y": -1105.4901123046876,
+                    "x": 22.81318855285644
+                },
+                {
+                    "w": 2.83464550971984,
+                    "z": 108.7266845703125,
+                    "y": 292.5362548828125,
+                    "x": 2567.947265625
+                },
+                {
+                    "w": 218.26771545410157,
+                    "z": 18.5465087890625,
+                    "y": 2699.947265625,
+                    "x": -1118.835205078125
+                },
+                {
+                    "w": 357.1653442382813,
+                    "z": 28.1845703125,
+                    "y": -1035.3494873046876,
+                    "x": 842.4000244140625
+                }
+            ],
+            "products": [
+                {
+                    "name": "pistol_ammo",
+                    "price": 5
+                },
+                {
+                    "name": "weapon_knife",
+                    "price": 200
+                },
+                {
+                    "metadata": {
+                        "registered": true
+                    },
+                    "name": "weapon_pistol",
+                    "price": 1000
+                },
+                {
+                    "metadata": {
+                        "registered": true
+                    },
+                    "name": "weapon_crowbar",
+                    "price": 500
+                }
+            ]
+        },
+        "General": {
+            "locations": [
+                {
+                    "w": 272.1259765625,
+                    "z": 29.4820556640625,
+                    "y": -1347.177978515625,
+                    "x": 24.4219799041748
+                },
+                {
+                    "w": 14.17322826385498,
+                    "z": 7.8974609375,
+                    "y": 584.4000244140625,
+                    "x": -3039.257080078125
+                },
+                {
+                    "w": 357.1653442382813,
+                    "z": 12.817626953125,
+                    "y": 999.9296875,
+                    "x": -3242.4130859375
+                },
+                {
+                    "w": 255.11810302734376,
+                    "z": 35.025634765625,
+                    "y": 6415.05517578125,
+                    "x": 1727.7098388671876
+                },
+                {
+                    "w": 323.14959716796877,
+                    "z": 42.052001953125,
+                    "y": 4923.1123046875,
+                    "x": 1697.6571044921876
+                },
+                {
+                    "w": 303.3070983886719,
+                    "z": 32.3297119140625,
+                    "y": 3739.9384765625,
+                    "x": 1960.04833984375
+                },
+                {
+                    "w": 96.37794494628906,
+                    "z": 42.153076171875,
+                    "y": 2671.226318359375,
+                    "x": 549.1253051757813
+                },
+                {
+                    "w": 325.9842529296875,
+                    "z": 55.228515625,
+                    "y": 3279.428466796875,
+                    "x": 2677.859375
+                },
+                {
+                    "w": 0.0,
+                    "z": 108.6087646484375,
+                    "y": 380.7428588867188,
+                    "x": 2557.305419921875
+                },
+                {
+                    "w": 257.9527587890625,
+                    "z": 103.5538330078125,
+                    "y": 326.4659423828125,
+                    "x": 372.5010986328125
+                }
+            ],
+            "products": [
+                {
+                    "name": "burger",
+                    "price": 10
+                },
+                {
+                    "name": "water",
+                    "price": 10
+                },
+                {
+                    "name": "kurkakola",
+                    "price": 10
+                },
+                {
+                    "count": 1,
+                    "name": "devhub_laptop",
+                    "price": 1000
+                }
+            ]
+        }
+    }
+}
